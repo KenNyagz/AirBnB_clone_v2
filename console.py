@@ -116,54 +116,55 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """Create an object of any class"""
-        if not args:
-            print("** class name missing **")
-            return
-        params = args.split()
-        class_name = params[0]
-        if class_name not in HBNBCommand.classes:
-            print("** class doesn't exist **")
-            return
-        # Remove the class name from the parameters list
-        params = params[1:]
+        if os.getenv("HBNB_TYPE_STORAGE") != "db":
+            if not args:
+                print("** class name missing **")
+                return
+            params = args.split()
+            class_name = params[0]
+            if class_name not in HBNBCommand.classes:
+                print("** class doesn't exist **")
+                return
+            # Remove the class name from the parameters list
+            params = params[1:]
 
-        # Split each parameter into key and value
-        object_params = {}
-        for param in params:
-            key_value = param.split('=')
-            if len(key_value) == 2:
-                key, value = key_value
-                key = key.strip()
-                value = value.strip()
+            # Split each parameter into key and value
+            object_params = {}
+            for param in params:
+                key_value = param.split('=')
+                if len(key_value) == 2:
+                    key, value = key_value
+                    key = key.strip()
+                    value = value.strip()
 
-                # Process the value based on its type
-                if value.startswith('"') and value.endswith('"'):
-                    # String value
-                    value = value[1:-1].replace('_', ' ')
-                elif '.' in value:
-                    # Float value
-                    try:
-                        value = float(value)
-                    except ValueError:
-                        continue
-                else:
-                    # Integer value
-                    try:
-                        value = int(value)
-                    except ValueError:
-                        continue
+                    # Process the value based on its type
+                    if value.startswith('"') and value.endswith('"'):
+                        # String value
+                        value = value[1:-1].replace('_', ' ')
+                    elif '.' in value:
+                        # Float value
+                        try:
+                            value = float(value)
+                        except ValueError:
+                            continue
+                    else:
+                        # Integer value
+                        try:
+                            value = int(value)
+                        except ValueError:
+                            continue
 
-                object_params[key] = value
-        #object_params['updated_at'] = datetime.now()
+                    object_params[key] = value
+            #object_params['updated_at'] = datetime.now()
 
-        # Create an instance of the specified class with the given parameters
-        new_instance = HBNBCommand.classes[class_name]()
-        # Set the attributes of the instance
-        for key, value in object_params.items():
-            setattr(new_instance, key, value)
-        # Save the instance and print its ID
-        new_instance.save()
-        print(new_instance.id)
+            # Create an instance of the specified class with the given parameters
+            new_instance = HBNBCommand.classes[class_name]()
+            # Set the attributes of the instance
+            for key, value in object_params.items():
+                setattr(new_instance, key, value)
+            # Save the instance and print its ID
+            new_instance.save()
+            print(new_instance.id)
 
     
     def help_create(self):
@@ -239,8 +240,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, args):
         """ Shows all objects, or all objects of a class"""
+        print_list = []
         if os.getenv("HBNB_TYPE_STORAGE") != "db":
-            print_list = []
             if args:
                 args = args.split(' ')[0]  # remove possible trailing args
                 if args not in HBNBCommand.classes:
@@ -252,17 +253,20 @@ class HBNBCommand(cmd.Cmd):
             else:
                 for k, v in storage._FileStorage__objects.items():
                     print_list.append(str(v))
-            print(print_list)
 
-    #if os.getenv("HBNB_TYPE_STORAGE") == "db":  # if db storage
-        #if args:
-           # args = args.split()[0]
-           # if args not in HBNBCommand.classes:
-            #    print("** class doesn't exist **")
-             #   return
-            #for k, v in storage.all(args[0]):
+        if os.getenv("HBNB_TYPE_STORAGE") == "db":  # if db storage
+            if args:
+                clas = args.split()[0]
+                if clas not in HBNBCommand.classes:
+                   print("** class doesn't exist **")
+                   return
+                for obj in storage.all(clas).values:
+                    print_list.append(str(obj))
+            else:
+                for obj in storage.all().values:
+                    print_list.append(str(obj))
 
-    
+        print(print_list)
 
     def help_all(self):
         """ Help information for the all command """
