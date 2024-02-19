@@ -32,7 +32,8 @@ class BaseModel:
             kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
                                                      '%Y-%m-%dT%H:%M:%S.%f')
             for k, v in kwargs.items():
-                setattr(self, k, v)
+                if "__class__" not in k:
+                    setattr(self, k, v)
             #del kwargs['__class__']
             self.__dict__.update(kwargs)
 
