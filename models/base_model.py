@@ -27,10 +27,12 @@ class BaseModel:
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
         else:
-            kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],
-                                                     '%Y-%m-%dT%H:%M:%S.%f')
-            kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
-                                                     '%Y-%m-%dT%H:%M:%S.%f')
+            if 'updated_at' in kwargs and isinstance(kwargs['updated_at'], str):
+                kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],
+                                                     '%Y-%m-%d %H:%M:%S.%f')
+            if 'created_at' in kwargs and isinstance(kwargs['created_at'], str):
+                kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
+                                                     '%Y-%m-%d %H:%M:%S.%f')
             for k, v in kwargs.items():
                 if "__class__" not in k:
                     setattr(self, k, v)
@@ -57,9 +59,8 @@ class BaseModel:
                           (str(type(self)).split('.')[-1]).split('\'')[0]})
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
-        if "_sa_instance_state" in dictionary.keys:
+        if "_sa_instance_state" in dictionary.keys():
             del dictionary["_sa_instance_state"]
-        # or with a try-except... dictionary.pop('_sa_instance_state', None)
         return dictionary
 
     def delete(self):

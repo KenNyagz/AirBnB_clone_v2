@@ -3,6 +3,7 @@
 import cmd
 import sys
 import os
+from datetime import datetime
 from models.base_model import BaseModel
 from models.__init__ import storage
 from models.user import User
@@ -127,7 +128,6 @@ class HBNBCommand(cmd.Cmd):
                 return
             # Remove the class name from the parameters list
             params = params[1:]
-
             # Split each parameter into key and value
             object_params = {}
             for param in params:
@@ -136,7 +136,6 @@ class HBNBCommand(cmd.Cmd):
                     key, value = key_value
                     key = key.strip()
                     value = value.strip()
-
                     # Process the value based on its type
                     if value.startswith('"') and value.endswith('"'):
                         # String value
@@ -153,10 +152,7 @@ class HBNBCommand(cmd.Cmd):
                             value = int(value)
                         except ValueError:
                             continue
-
                     object_params[key] = value
-            #object_params['updated_at'] = datetime.now()
-
             # Create an instance of the specified class with the given parameters
             new_instance = HBNBCommand.classes[class_name]()
             # Set the attributes of the instance
@@ -165,8 +161,46 @@ class HBNBCommand(cmd.Cmd):
             # Save the instance and print its ID
             new_instance.save()
             print(new_instance.id)
+        else:
+            if not args:
+                print("** class name missing **")
+                return
+            params = args.split()
+            class_name = params[0]
+            if class_name not in HBNBCommand.classes:
+                print("** class doesn't exist **")
+                return
+            params = params[1:]
+            object_params = {}
+            for param in params:
+                key_value = param.split('=')
+                if len(key_value) == 2:
+                    key, value = key_value
+                    key = key.strip() #remove any leading or
+                    value = value.strip() # trailing whitespaces
 
-    
+                if value.startswith('"') and value.endswith('"'):
+                    value = value[1:-1].replace('_', ' ') # handle ...
+                elif value.startswith("'") and value.endswith("'"):
+                    value = value[1:-1].replace('_', ' ')  # ...strings
+                elif '.' in value: # float value
+                    try:
+                        value = float(value)
+                    except ValueError:
+                        continue
+                else: # integer
+                    try:
+                        value = int(value)
+                    except ValueError:
+                        continue
+                object_params[key] = value
+
+            #object_params['updated_at'] = str(datetime.now())
+            new_instance = HBNBCommand.classes[class_name](**object_params)
+            storage.new(new_instance)
+            storage.save()
+            print(new_instance.id)
+
     def help_create(self):
         """ Help information for the create method """
         print("Creates a class of any type")
