@@ -29,10 +29,10 @@ class BaseModel:
         else:
             if 'updated_at' in kwargs and isinstance(kwargs['updated_at'], str):
                 kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],
-                                                     '%Y-%m-%d %H:%M:%S.%f')
+                                                     '%Y-%m-%dT%H:%M:%S.%f')
             if 'created_at' in kwargs and isinstance(kwargs['created_at'], str):
                 kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
-                                                     '%Y-%m-%d %H:%M:%S.%f')
+                                                     '%Y-%m-%dT%H:%M:%S.%f')
             for k, v in kwargs.items():
                 if "__class__" not in k:
                     setattr(self, k, v)
