@@ -177,8 +177,7 @@ class HBNBCommand(cmd.Cmd):
                 if len(key_value) == 2:
                     key, value = key_value
                     key = key.strip() #remove any leading or
-                    value = value.strip() # trailing whitespaces
-
+                    print(key, value)
                 if value.startswith('"') and value.endswith('"'):
                     value = value[1:-1].replace('_', ' ') # handle ...
                 elif value.startswith("'") and value.endswith("'"):
