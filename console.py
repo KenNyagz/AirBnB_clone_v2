@@ -288,7 +288,7 @@ class HBNBCommand(cmd.Cmd):
                 for k, v in storage._FileStorage__objects.items():
                     print_list.append(str(v))
 
-        if os.getenv("HBNB_TYPE_STORAGE") == "db":  # if db storage
+        elif os.getenv("HBNB_TYPE_STORAGE") == "db":  # if db storage
             if args:
                 clas = args.split()[0]
                 if clas not in HBNBCommand.classes:

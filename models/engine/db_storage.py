@@ -4,11 +4,11 @@ from os import getenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from models.base_model import BaseModel, Base
-from models.city import City
-from models.place import Place
-from models.user import User
-from models.amenity import Amenity
-from models.review import Review
+# from models.city import City
+# from models.place import Place
+# from models.user import User
+# from models.amenity import Amenity
+# from models.review import Review
 
 
 class DBStorage:
@@ -32,6 +32,13 @@ class DBStorage:
 
     def all(self, cls=None):
         """Gets all objects, of a class if specified, stored in the database"""
+        from models.base_model import BaseModel
+        from models.city import City
+        from models.state import State
+        from models.place import Place
+        from models.user import User
+        from models.amenity import Amenity
+        from models.review import Review
         if cls is None:
             cls_list = [State, City, User, Amenity, Place, Review]
         else:
