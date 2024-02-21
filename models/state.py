@@ -14,7 +14,6 @@ class State(BaseModel, Base):
     if os.getenv("HBNB_TYPE_STORAGE") == "db":
         id = Column(Integer, primary_key=True, autoincrement=True)
         name = Column(String(128), nullable=False)
-        #id = Column(String(60), nullable=False, primary_key=True)
         cities = relationship("City", backref="state")
     else:
         @property
@@ -23,7 +22,7 @@ class State(BaseModel, Base):
                current State.id;the FileStorage relationship btn State and City"""
             from models import storage
             list_cities = []
-            for city in storage.all(City).value():
+            for city in storage.all(City).values():
                 if city.state_id == self.id:
                     list_cities.append(city)
             return list_cities
