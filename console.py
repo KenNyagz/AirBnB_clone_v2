@@ -292,11 +292,15 @@ class HBNBCommand(cmd.Cmd):
                 if clas not in HBNBCommand.classes:
                    print("** class doesn't exist **")
                    return
-                for obj in storage.all(clas).values:
+                clazz = HBNBCommand.classes[eval(clas)]
+                print(clazz)
+                for obj in storage.all(clazz).values:
                     print_list.append(str(obj))
             else:
-                for obj in storage.all().values:
-                    print_list.append(str(obj))
+                clas = None
+                storage.all(clas)
+                #for obj in storage.all().values:
+                    #print_list.append(str(obj))
 
         print(print_list)
 
