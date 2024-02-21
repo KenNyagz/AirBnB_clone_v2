@@ -8,8 +8,8 @@ import os
 
 class State(BaseModel, Base):
     """ State class """
-    name = ""
     __tablename__ = "states"
+    name = ''
     id = Column(String(60), nullable=False, primary_key=True)
     if os.getenv("HBNB_TYPE_STORAGE") == "db":
         id = Column(Integer, primary_key=True, autoincrement=True)

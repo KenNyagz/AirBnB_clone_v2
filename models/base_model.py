@@ -29,7 +29,8 @@ class BaseModel:
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
         else:
-
+            if "id" not in kwargs:
+                self.id = str(uuid.uuid4())
             if 'updated_at' in kwargs and isinstance(kwargs['updated_at'], str):
                 kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],
                                                      '%Y-%m-%dT%H:%M:%S.%f')
@@ -41,11 +42,14 @@ class BaseModel:
                     setattr(self, k, v)
             if '__class__' in kwargs:
                 del kwargs['__class__']
+
             self.__dict__.update(kwargs)
 
     def __str__(self):
         """Returns a string representation of the instance"""
         cls = (str(type(self)).split('.')[-1]).split('\'')[0]
+        if "_sa_instance_state" in self.__dict__:
+            del self.__dict__["_sa_instance_state"]
         return '[{}] ({}) {}'.format(cls, self.id, self.__dict__)
 
     def save(self):
@@ -58,13 +62,13 @@ class BaseModel:
     def to_dict(self):
         """Convert instance into dict format"""
         dictionary = {}
+        self.__dict__.pop('_sa_instance_state', None)
         dictionary.update(self.__dict__)
         dictionary.update({'__class__':
                           (str(type(self)).split('.')[-1]).split('\'')[0]})
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
-        if "_sa_instance_state" in dictionary.keys():
-            del dictionary["_sa_instance_state"]
+        dictionary.pop('_sa_instance_state', None)
         return dictionary
 
     def delete(self):
