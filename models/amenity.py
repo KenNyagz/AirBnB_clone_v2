@@ -9,7 +9,7 @@ from sqlalchemy.orm import relationship
 class Amenity(BaseModel, Base):
     __tablename__ = "amenities"
 
-    if os.getenv("HBNTN_TYPE_STORAGE") == 'db':
+    if os.getenv("HBNB_TYPE_STORAGE") == 'db':
         name = Column(String(128), nullable=False)
         # Many-to-many relationship between place and amenity
         place_amenities = relationship("Place", secondary='place_amenity')
