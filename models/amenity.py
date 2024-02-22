@@ -12,7 +12,7 @@ class Amenity(BaseModel, Base):
     if os.getenv("HBNB_TYPE_STORAGE") == 'db':
         name = Column(String(128), nullable=False)
         # Many-to-many relationship between place and amenity
-        #place_amenities = relationship("Place", secondary='place_amenity')
+        place_amenities = relationship("Place", secondary='place_amenity')
 
         # Association table for the Many-To-Many relationship between Place and Amenity tables
         place_amenity = Table('place_amenity', Base.metadata,
