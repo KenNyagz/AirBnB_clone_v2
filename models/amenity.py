@@ -15,6 +15,9 @@ class Amenity(BaseModel, Base):
         place_amenities = relationship("Place", secondary='place_amenity')
 
         # Association table for the Many-To-Many relationship between Place and Amenity tables
-        #place_amenity = Table('place_amenity',B
+        place_amenity = Table('place_amenity', Base.metadata,
+                              Column('place_id', String(60), ForeignKey('places.id'), primary_key=True, nullable=False),
+                              Column('amenity_id', String(60), ForeignKey('amenities.id'), primary_key=True, nullable=False))
+
     else:
         name = ""

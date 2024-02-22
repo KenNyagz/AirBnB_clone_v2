@@ -2,7 +2,7 @@
 """ Place Module for HBNB project """
 import os
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String, Integer, Float, ForeignKey
+from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from sqlalchemy.orm import relationship
 
 class Place(BaseModel, Base):
@@ -32,3 +32,11 @@ class Place(BaseModel, Base):
         price_by_night = Column(Integer, nullable=False, default=0)
         latitude = Column(Float)
         longitude = Column(Float)
+
+        # Define the place_amenity table
+        place_amenity = Table('place_amenity', Base.metadata,
+                               Column('place.id', String(60), ForeignKey('places.id'), primary_key=True, nullable=False),
+                               Column('place.id', String(60), ForeignKey('amenities.id'), primary_key=True, nullable=False))
+
+         # Define the relationship with Amenity
+        amenities = relationship('Amenity', secondary=place_amenity, viewonly=False)
