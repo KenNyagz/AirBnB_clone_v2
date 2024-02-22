@@ -40,4 +40,4 @@ class Place(BaseModel, Base):
 
 
          # Define the relationship with Amenity
-        amenities = relationship('Amenity', secondary=place_amenity, viewonly=False)
+        #amenities = relationship('Amenity', secondary=place_amenity, viewonly=False)
