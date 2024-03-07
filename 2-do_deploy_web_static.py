@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 # Distrubutesarchive to the webservers
 from fabric.api import env, put, run, sudo
-from os.path import exists
+# from os.path import exists
+import os
 from datetime import datetime
 
 
@@ -18,19 +19,14 @@ def do_deploy(archive_path):
     try:
         put(archive_path, '/tmp/')
 
-        archive_filename = archive_path.split('/')[-1]
-        archive_name = archive_filename.split('.')[0]
-        release_path = '/data/web_static/releases/{}/'.format(archive_name)
-        run('mkdir -p {}'.format(release_path))
-        run('tar -xzf /tmp/{} -C {}'.format(archive_filename, release_path))
-
-        # Delete archive from archive
+        archive_filename = os.path.basename(archive_path)
+        archive_folder = "/data/web_static/releases{}".format(os.path.splitext(archive_filename)[0])
+        run('mkdir -p {}'.format(archive_folder))
+        run('tar -xzf /tmp/{} -C {}'.format(archive_filename, archive_folder))
         run('rm /tmp/{}'.format(archive_filename))
 
-        # Delete existing symbolic link
         run('rm -rf /data/web_static/current')
-        # new symbolic link
-        run('ln -s {} /data/web_static/current'.format(release_path))
+        run('ln -s {} /data/web_static/current'.format(archive_folder))
 
         print('Deployment successful')
         return True
