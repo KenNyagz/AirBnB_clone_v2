@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env bash
 #Set up web servers to deploy web_static
 
 sudo apt-get update
