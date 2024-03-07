@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-'''fabfile generates .tgz ar from web_static/'s contents'''
+'''
+   fabfile generates .tgz ar from web_static/'s contents
+'''
 from fabric.api import local
 from datetime import datetime
 
