@@ -17,20 +17,25 @@ def do_deploy(archive_path):
         return False
 
     try:
-        put(archive_path, "/tmp/")
-
-        # Uncompress the archive to the /data/web_static/releases/ directory on the web server
-        archive_filename = os.path.basename(archive_path)
-        archive_folder = "/data/web_static/releases/{}".format(os.path.splitext(archive_filename)[0])
-        run("mkdir -p {}".format(archive_folder))
-        run("tar -xzf /tmp/{} -C {}".format(archive_filename, archive_folder))
+        archive_filename = archive_path.split("/")[-1]
+        # Extract the filename without its extension for the release directory
+        release_dir = "/data/web_static/releases/" + archive_filename.split(".")[0]
+        
+        # Upload the archive to the /tmp/ directory of the web server
+        put(archive_path, "/tmp/{}".format(archive_filename))
+        
+        # Uncompress the archive to the folder on the web server
+        run("mkdir -p {}".format(release_dir))
+        run("tar -xzf /tmp/{} -C {}".format(archive_filename, release_dir))
+        
+        # Delete the archive from the web server
         run("rm /tmp/{}".format(archive_filename))
-
-        # Delete the symbolic link /data/web_static/current from the web server
+        
+        # Delete the symbolic link from the web server
         run("rm -rf /data/web_static/current")
-
-        # Create a new symbolic link /data/web_static/current on the web server
-        run("ln -s {} /data/web_static/current".format(archive_folder))
+        
+        # Create a new the symbolic link on the web server
+        run("ln -s {} /data/web_static/current".format(release_dir))
 
         print('Deployment successful')
         return True
