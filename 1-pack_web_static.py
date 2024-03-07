@@ -6,7 +6,7 @@ from fabric.api import local
 from datetime import datetime
 
 
-def do_pack:
+def do_pack():
     '''return archive path of archive created from web_static contents'''
     try:
         local("mkdir -p versions")
