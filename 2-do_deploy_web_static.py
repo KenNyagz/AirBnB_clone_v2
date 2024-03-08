@@ -12,7 +12,7 @@ env.key_file = '~/.ssh/id_rsa'
 
 def do_deploy(archive_path):
     '''deploys static content to web servers'''
-    if not exists(archive_path) :
+    if not exists(archive_path):
         return False
 
     try:
@@ -23,7 +23,7 @@ def do_deploy(archive_path):
         release_path = '/data/web_static/releases/{}/'.format(archive_name)
         sudo('mkdir -p {}'.format(release_path))
         sudo('tar -xzf /tmp/{} -C {}'.format(archive_filename, release_path))
-        sudo('mv /data/web_static/releases/{}/web_static/*
+        sudo('mv /data/web_static/releases/{}/web_static/*\
  /data/web_static/releases/{}/'.format(archive_name, archive_name))
         sudo('rm -rf /data/web_static/releases/{}/web_static'.format(
             archive_name))
