@@ -31,7 +31,8 @@ def do_pack():
 
 #@task
 def do_deploy(archive_path):
-    '''deploys static content to web servers'''
+    '''
+       deploys static content to web servers'''
     if not exists(archive_path):
         return False
 
@@ -65,11 +66,12 @@ def do_deploy(archive_path):
 
 #@task
 def deploy():
-    '''Deploys latest version of web_static code to the web servers'''
+    '''
+    Deploys latest version of web_static code to the web servers'''
     archive_path = do_pack()
 
     if not archive_path:
-        print("Archive not created")
+        #print("Archive not created")
         return False
 
     return do_deploy(archive_path)
