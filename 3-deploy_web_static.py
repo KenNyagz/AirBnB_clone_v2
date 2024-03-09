@@ -10,9 +10,14 @@ env.user = 'ubuntu'
 env.key_file = '~/.ssh/id_rsa'
 
 
-#@task
+@task
 def do_pack():
-    '''return archive path of archive created from web_static contents'''
+    """
+    Creates a .tgz archive from the contents of the web_static folder.
+
+    Returns:
+        Path to the archive if successful, None otherwise.
+    """
     try:
         local("mkdir -p versions")
 
@@ -31,8 +36,15 @@ def do_pack():
 
 #@task
 def do_deploy(archive_path):
-    '''
-       deploys static content to web servers'''
+    """
+    Distributes an archive to web servers and deploys it.
+
+    Args:
+        archive_path: Path to the archive file.
+
+    Returns:
+        True if successful, False otherwise.
+    """
     if not exists(archive_path):
         return False
 
@@ -67,7 +79,17 @@ def do_deploy(archive_path):
 #@task
 def deploy():
     '''
-    Deploys latest version of web_static code to the web servers'''
+    Deploys latest version of web_static code to the web servers
+    
+    Distributes an archive to web servers and deploys it.
+
+    Args:
+        archive_path: Path to the archive file.
+
+    Returns:
+        True if successful, False otherwise.
+    
+    '''
     archive_path = do_pack()
 
     if not archive_path:
