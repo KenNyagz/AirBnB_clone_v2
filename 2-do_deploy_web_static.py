@@ -10,7 +10,7 @@ env.user = 'ubuntu'
 env.key_file = '~/.ssh/id_rsa'
 
 
-#def do_pack():
+def do_pack():
     '''return archive path of archive created from web_static contents'''
     try:
         local("mkdir -p versions")
