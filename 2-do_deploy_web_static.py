@@ -10,6 +10,7 @@ env.user = 'ubuntu'
 env.key_file = '~/.ssh/id_rsa'
 
 
+@task
 def do_pack():
     '''return archive path of archive created from web_static contents'''
     try:
@@ -28,6 +29,7 @@ def do_pack():
         return None
 
 
+@task
 def do_deploy(archive_path):
     '''deploys static content to web servers'''
     if not exists:
