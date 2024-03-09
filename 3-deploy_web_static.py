@@ -65,7 +65,7 @@ def do_deploy(archive_path):
 
 @task
 def deploy():
-   '''Deploys latest version of web_static code to the web servers'''
+    '''Deploys latest version of web_static code to the web servers'''
     archive_path = do_pack()
 
     if not archive_path:
