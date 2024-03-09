@@ -27,6 +27,7 @@ def do_pack():
         print("Couldn't create archive")
         return None
 
+
 def do_deploy(archive_path):
     '''deploys static content to web servers'''
     if not exists:
