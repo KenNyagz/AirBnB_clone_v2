@@ -34,7 +34,7 @@ def do_deploy(archive_path):
         # Delete existing symbolic link
         sudo('rm -rf /data/web_static/current')
         # new symbolic link
-        sudo('ln -s {} /data/web_static/current'.format(release_path))
+        sudo('ln -s {}/data/web_static/current'.format(release_path))
 
         print('Deployment successful')
         return True
