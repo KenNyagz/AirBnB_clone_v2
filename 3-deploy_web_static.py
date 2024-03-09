@@ -34,7 +34,7 @@ def do_pack():
         return None
 
 
-#@task
+@task
 def do_deploy(archive_path):
     """
     Distributes an archive to web servers and deploys it.
@@ -76,7 +76,7 @@ def do_deploy(archive_path):
         return False
 
 
-#@task
+@task
 def deploy():
     '''
     Deploys latest version of web_static code to the web servers
