@@ -12,7 +12,7 @@ env.key_file = '~/.ssh/id_rsa'
 
 def do_deploy(archive_path):
     '''deploys static content to web servers'''
-    if not exists(archive_path):
+    if not exists:
         return False
 
     try:
