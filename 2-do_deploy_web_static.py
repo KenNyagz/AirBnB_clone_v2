@@ -28,55 +28,34 @@ def do_pack():
         return None
 
 
-#def do_deploy(archive_path):
- #   '''deploys static content to web servers'''
-#    if not exists:
-#        return False
-#
-#    try:
-#        put(archive_path, '/tmp/')
+def do_deploy(archive_path):
+    '''deploys static content to web servers'''
+    if not exists:
+        return False
 
- #       archive_filename = archive_path.split('/')[-1]
-#        archive_name = archive_filename.split('.')[0]
-#        release_path = '/data/web_static/releases/{}/'.format(archive_name)
-#        sudo('mkdir -p {}'.format(release_path))
-#        sudo('tar -xzf /tmp/{} -C {}'.format(archive_filename, release_path))
-#        sudo('mv /data/web_static/releases/{}/web_static/*\
-# /data/web_static/releases/{}/'.format(archive_name, archive_name))
- #       sudo('rm -rf /data/web_static/releases/{}/web_static'.format(
-  #          archive_name))
+    try:
+        put(archive_path, '/tmp/')
+
+        archive_filename = archive_path.split('/')[-1]
+        archive_name = archive_filename.split('.')[0]
+        release_path = '/data/web_static/releases/{}/'.format(archive_name)
+        sudo('mkdir -p {}'.format(release_path))
+        sudo('tar -xzf /tmp/{} -C {}'.format(archive_filename, release_path))
+        sudo('mv /data/web_static/releases/{}/web_static/*\
+ /data/web_static/releases/{}/'.format(archive_name, archive_name))
+        sudo('rm -rf /data/web_static/releases/{}/web_static'.format(
+            archive_name))
 
         # Delete archive from archive
-   #     sudo('rm /tmp/{}'.format(archive_filename))
+        sudo('rm /tmp/{}'.format(archive_filename))
 
         # Delete existing symbolic link
-    #    sudo('rm -rf /data/web_static/current')
+        sudo('rm -rf /data/web_static/current')
         # new symbolic link
-     #   sudo('ln -s {} /data/web_static/current'.format(release_path))
+        sudo('ln -s {} /data/web_static/current'.format(release_path))
 
-      #  print('Deployment successful')
-  #      return True
-   # except Exception as e:
-    #    print("Deployment failure:", e)
-     #   return False
-
-
-def do_deploy(archive_path):
-    """distributes an archive to the web servers"""
-    if exists(archive_path) is False:
-        return False
-    try:
-        file_n = archive_path.split("/")[-1]
-        no_ext = file_n.split(".")[0]
-        path = "/data/web_static/releases/"
-        put(archive_path, '/tmp/')
-        run('mkdir -p {}{}/'.format(path, no_ext))
-        run('tar -xzf /tmp/{} -C {}{}/'.format(file_n, path, no_ext))
-        run('rm /tmp/{}'.format(file_n))
-        run('mv {0}{1}/web_static/* {0}{1}/'.format(path, no_ext))
-        run('rm -rf {}{}/web_static'.format(path, no_ext))
-        run('rm -rf /data/web_static/current')
-        run('ln -s {}{}/ /data/web_static/current'.format(path, no_ext))
+        print('Deployment successful')
         return True
-    except:
+    except Exception as e:
+        print("Deployment failure:", e)
         return False
