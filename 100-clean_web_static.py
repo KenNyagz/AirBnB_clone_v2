@@ -12,12 +12,17 @@ env.key_filename = '~/.ssh/id_rsa'
 
 def do_clean(number=0):
     '''Deletes unused archive from the server'''
+    number = int(number)
+    if number < 2:
+        number = 1
     try:
-        local('ls -t versions | tail -n +{} | xargs -I {{}} rm versions/{{}}'
-              .format(number + 1))
-        for host in env.hosts:
-            releases = run("ls -t /data/web_static/releases".split())
-            for releases in releases[numbers:]:
-                sudo("rm -rf /data/web_static/releases/{}".format(releases))
+        # Delete unnecessary archives in the versions folder
+        with lcd('versions'):
+            local("ls -t | tail -n +{} | xargs rm -rf".format(number + 1))
+        # Del unnecessary archives in /data/web_static/releases dir on server
+        with cd('/data/web_static/releases'):
+            sudo("ls -t | tail -n +{} | xargs rm -rf".format(number + 1))
+        return True
     except Exception as e:
         print("Error")
+        return False
