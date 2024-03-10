@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 # Distrubutes archive to the webservers
-from fabric.api import env, put, run, sudo, local
+from fabric.api import env, put, run, sudo, local, task
 from os.path import exists
 from datetime import datetime
 
