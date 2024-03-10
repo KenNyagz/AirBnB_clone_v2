@@ -34,7 +34,7 @@ def do_pack():
 @task
 def do_deploy(archive_path):
     '''
-    deploys static content to web servers 
+    deploys static content to web servers
     '''
     if not exists:
         return False
