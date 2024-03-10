@@ -80,7 +80,7 @@ def do_deploy(archive_path):
 def deploy():
     '''
     Deploys latest version of web_static code to the web servers
-    
+
     Distributes an archive to web servers and deploys it.
 
     Args:
@@ -88,15 +88,16 @@ def deploy():
 
     Returns:
         True if successful, False otherwise.
-    
+
     '''
     archive_path = do_pack()
 
     if not archive_path:
-        #print("Archive not created")
+        # print("Archive not created")
         return False
 
     return do_deploy(archive_path)
+
 
 if __name__ == "__main__":
     do_deploy()
