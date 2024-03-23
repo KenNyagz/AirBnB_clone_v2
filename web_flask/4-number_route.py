@@ -38,9 +38,9 @@ def cool_is_py(text="is cool"):
 
 
 @app.route("number/", strict_slashes=False)
-@app.route("/number/<n>", strict_slashes=False)
+@app.route("/number/<int:n>", strict_slashes=False)
     '''Creates HTML http response for path taking argument'''
-    if isdigit(n, int):
+    if isinstance(n, int):
         return f'{n} is a number';
 
 
