@@ -21,7 +21,7 @@ def hbnb():
     return 'HBNB'
 
 
-@app.route('/c/')
+@app.route('/c/', strict_slashes=False))
 @app.route('/c/<text>', strict_slashes=False)
 def fun_is_c(text):
     '''Creates HTML http response for path taking argument'''
