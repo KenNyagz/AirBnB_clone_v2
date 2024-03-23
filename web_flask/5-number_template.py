@@ -36,7 +36,6 @@ def cool_is_py(text="is cool"):
     return f"Python {text}"
 
 
-# @app.route("number/", strict_slashes=False)
 @app.route("/number/<int:n>", strict_slashes=False)
 def number(n):
     '''Creates HTML http response for path taking argument'''
