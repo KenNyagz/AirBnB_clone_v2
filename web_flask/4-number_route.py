@@ -37,7 +37,7 @@ def cool_is_py(text="is cool"):
     return f"Python {text}"
 
 
-# @app.route("number/", strict_slashes=False)
+@app.route("number/", strict_slashes=False)
 @app.route("/number/<n>", strict_slashes=False)
     '''Creates HTML http response for path taking argument'''
     if isdigit(n):
