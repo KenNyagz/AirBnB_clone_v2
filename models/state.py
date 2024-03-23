@@ -10,9 +10,9 @@ class State(BaseModel, Base):
     """ State class """
     __tablename__ = "states"
     name = ''
-    id = Column(String(60), nullable=False, primary_key=True)
+    # id = Column(String(60), nullable=False, primary_key=True)
     if os.getenv("HBNB_TYPE_STORAGE") == "db":
-        id = Column(Integer, primary_key=True, autoincrement=True)
+        # id = Column(Integer, primary_key=True, autoincrement=True)
         name = Column(String(128), nullable=False)
         #id = Column(String(60), nullable=False, primary_key=True)
         cities = relationship("City", backref="state")
