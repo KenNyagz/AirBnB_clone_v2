@@ -21,7 +21,6 @@ def hbnb():
     return 'HBNB'
 
 
-@app.route('/c/', strict_slashes=False)
 @app.route('/c/<text>', strict_slashes=False)
 def fun_is_c(text):
     '''Creates HTML http response for path taking argument'''
@@ -46,10 +45,9 @@ def number(n):
 
 
 @app.route("/number_template/<int:n>", strict_slashes=False)
-def num_template(n):
-    """display a HTML page only if n is an integer"""
-    if isinstance(n, int):
-        return render_template('5-number.html', n=n)
+def number_template(n):
+    """Display a HTML page only if n is an integer"""
+    return render_template('5-number.html', n=n)
 
 
 if __name__ == '__main__':
