@@ -15,7 +15,7 @@ def hello():
     return 'Hello HBNB!'
 
 
-@app.route('/hbnb')
+@app.route('/hbnb', strict_slashes=False)
 def hbnb():
     '''Defines another landing page to different path'''
     return 'HBNB'
@@ -37,11 +37,12 @@ def cool_is_py(text="is cool"):
     return f"Python {text}"
 
 
-@app.route("number/", strict_slashes=False)
+# @app.route("number/", strict_slashes=False)
 @app.route("/number/<int:n>", strict_slashes=False)
+def number(n):
     '''Creates HTML http response for path taking argument'''
     if isinstance(n, int):
-        return f'{n} is a number';
+        return f'{n} is a number'
 
 
 if __name__ == '__main__':
