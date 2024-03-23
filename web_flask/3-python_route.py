@@ -29,7 +29,7 @@ def fun_is_c(text):
 
 
 @app.route('/python/<text>', strict_slashes=False)
-def cool_is_py(text='is cool'):
+def cool_is_py(text="is cool"):
     '''Creates HTML http response for path taking argument'''
     text = text.replace('_', ' ')
     return f"Python {text}"
